@@ -8,6 +8,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: relative; /* Parent container needs to be set to position: relative */
 }
 .todo__item {
   display: flex;

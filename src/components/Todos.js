@@ -8,6 +8,7 @@ import SearchBar from './SearchBar';
 function Todos() {
   const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [quoteId, setQuoteId] = useState(null);
 
   useEffect(() => {
     fetchTodos().then((data) => {
@@ -22,7 +23,9 @@ function Todos() {
     );
     setFilteredTodos(filtered);
   };
-
+  const toggleQuote = (id) => {
+    setQuoteId(id === quoteId ? null : id);
+  };
   return (
     <div>
       <SearchBar handleSearch={handleSearch} />
@@ -48,8 +51,17 @@ function Todos() {
             </div>
           </div>
           <div style={{ marginRight: '35.5px' }}>
-            <Elipse />
+            <Elipse id={todo.id} toggleQuote={toggleQuote} />{' '}
+            {/* pass id and toggleQuote function as props */}
           </div>
+          {quoteId === todo.id && (
+            <div className='quote-bubble'>
+              <span>Edit ToDo</span>
+              <div className='quote__divider'></div>
+
+              <span>Mark Completed</span>
+            </div>
+          )}
         </div>
       ))}
     </div>

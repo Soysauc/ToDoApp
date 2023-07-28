@@ -8,9 +8,13 @@ import NewTodoForm from './components/NewTodoForm';
 function App() {
   const [todos, setTodos] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showQuote, setShowQuote] = useState(false);
 
   const addTodo = (newTodoItem) => {
     setTodos([...todos, newTodoItem]);
+  };
+  const toggleQuote = () => {
+    setShowQuote(!showQuote);
   };
 
   return (
@@ -18,8 +22,13 @@ function App() {
       <header className='app__header'>
         <div className='app__header-row'>
           <h1 className='app__title'>ToDo's</h1>
-          <Elipse />
+          <Elipse toggleQuote={toggleQuote} />
         </div>
+        {showQuote && (
+          <div className='quote-bubble'>
+            <span>This ellipse wasn't specified in the Figma</span>
+          </div>
+        )}
         <div className='app__header-toggle'>
           <span>Open</span>
           <span>Closed</span>
