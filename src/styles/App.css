@@ -1,6 +1,6 @@
 .app {
   color: white;
-  max-width: 375px;
+  width: 375px;
   margin: 0 auto;
   height: 812px;
 }
@@ -16,6 +16,10 @@
 .app__header {
   height: 151px;
   background-color: #292639;
+}
+.app__gradient {
+  height: 6px;
+  background: linear-gradient(to bottom, #292639, #070417);
 }
 .app__header-row {
   display: flex;
@@ -34,4 +38,13 @@
   justify-content: space-around;
   margin: 22px 61px 12px 72px;
   opacity: 0.699999988079071;
+}
+.app__divider {
+  width: 78px;
+  height: 2px;
+  background: #292639;
+  margin: 16px auto;
+}
+.app__scroller {
+  overflow-y: auto;
 }

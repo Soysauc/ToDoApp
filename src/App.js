@@ -2,6 +2,7 @@ import './styles/App.css';
 import Elipse from './components/Elipse';
 import AddNew from './components/AddNew';
 import SearchBar from './components/SearchBar';
+import Todos from './components/Todos';
 
 function App() {
   return (
@@ -15,12 +16,16 @@ function App() {
           <span>Open</span>
           <span>Closed</span>
         </div>
+        <div className='app__gradient'></div>
       </header>
-      <body>
-        <SearchBar />
-        <div>Divider</div>
+      <div>
+        <section className='app__scroller'>
+          <SearchBar />
+          <div className='app__divider'></div>
+          <Todos />
+        </section>
         <AddNew />
-      </body>
+      </div>
     </div>
   );
 }
