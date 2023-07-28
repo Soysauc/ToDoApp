@@ -1,0 +1,37 @@
+.app {
+  color: white;
+  max-width: 375px;
+  margin: 0 auto;
+  height: 812px;
+}
+.app__title {
+  font-family: Poppins;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 41px;
+  letter-spacing: 0.32px;
+}
+
+.app__header {
+  height: 151px;
+  background-color: #292639;
+}
+.app__header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 19.5px 0 17px;
+}
+.app__header-toggle {
+  color: #fff;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  justify-content: space-around;
+  margin: 22px 61px 12px 72px;
+  opacity: 0.699999988079071;
+}

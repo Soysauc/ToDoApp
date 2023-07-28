@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
+import Elipse from './components/Elipse';
+import AddNew from './components/AddNew';
+import SearchBar from './components/SearchBar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='app'>
+      <header className='app__header'>
+        <div className='app__header-row'>
+          <h1 className='app__title'>ToDo's</h1>
+          <Elipse />{' '}
+        </div>
+        <div className='app__header-toggle'>
+          <span>Open</span>
+          <span>Closed</span>
+        </div>
       </header>
+      <body>
+        <SearchBar />
+        <div>Divider</div>
+        <AddNew />
+      </body>
     </div>
   );
 }
