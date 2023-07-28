@@ -1,26 +1,36 @@
 import React, { useState } from 'react';
 import '../styles/NewTodoForm.css';
 
-function NewTodoForm({ showForm, toggleForm }) {
+function NewTodoForm({ toggleForm, addTodo }) {
   const [newTodo, setNewTodo] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
 
   const handleAddTodo = () => {
-    console.log('New Todo:', {
+    if (!newTodo || !selectedUser || !selectedStatus) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const newTodoItem = {
       title: newTodo,
       user: selectedUser,
       status: selectedStatus,
-    });
+    };
 
+    addTodo(newTodoItem);
     setNewTodo('');
     setSelectedUser('');
     setSelectedStatus('');
     toggleForm();
   };
 
+  const handleBackButton = () => {
+    toggleForm();
+  };
+
   return (
-    <div className={`new-todo-form ${showForm ? 'show' : 'hide'}`}>
+    <div className='new-todo-form'>
       <div className='new-todo-form__content'>
         <svg
           className='new-todo-form__arrow'
@@ -29,20 +39,21 @@ function NewTodoForm({ showForm, toggleForm }) {
           height='24'
           viewBox='0 0 24 24'
           fill='none'
+          onClick={handleBackButton}
         >
           <path
             d='M11.4375 18.75L4.6875 12L11.4375 5.25'
             stroke='white'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
           <path
             d='M5.625 12L19.3125 12'
             stroke='white'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
         <h2 className='new-todo-form__title'>Add ToDo</h2>
@@ -79,7 +90,9 @@ function NewTodoForm({ showForm, toggleForm }) {
       <button className='new-todo-form__finish' onClick={handleAddTodo}>
         Finish
       </button>
-      <button className='new-todo-form__quit'>Quit</button>
+      <button className='new-todo-form__quit' onClick={handleBackButton}>
+        Quit
+      </button>
     </div>
   );
 }

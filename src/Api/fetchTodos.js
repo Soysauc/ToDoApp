@@ -17,6 +17,6 @@ export function fetchTodos() {
     });
 }
 
-fetchTodos().then((todos) => {
-  console.log(todos);
-});
+// fetchTodos().then((todos) => {
+//   console.log(todos);
+// });

@@ -6,6 +6,13 @@ import AddNew from './components/AddNew';
 import NewTodoForm from './components/NewTodoForm';
 
 function App() {
+  const [todos, setTodos] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const addTodo = (newTodoItem) => {
+    setTodos([...todos, newTodoItem]);
+  };
+
   return (
     <div className='app'>
       <header className='app__header'>
@@ -21,10 +28,13 @@ function App() {
       </header>
       <div className='app__content'>
         <section className='app__scroller'>
-          <Todos />
+          <Todos todos={todos} />
         </section>
-        <AddNew />
+        <AddNew toggleForm={() => setShowForm(true)} />
       </div>
+      {showForm && (
+        <NewTodoForm toggleForm={() => setShowForm(false)} addTodo={addTodo} />
+      )}
     </div>
   );
 }

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import '../styles/AddNew.css';
-import NewTodoForm from './NewTodoForm'; // Make sure to import NewTodoForm here
 
-function AddNew() {
-  const [showForm, setShowForm] = useState(false);
-  const toggleForm = () => {
-    setShowForm((prevShowForm) => !prevShowForm);
-  };
+function AddNew({ toggleForm }) {
+  // const [showForm, setShowForm] = useState(false);
+  // const toggleForm = () => {
+  //   setShowForm(!showForm);
+  // };
+  // const [todos, setTodos] = useState([]);
+
+  // const addTodo = (newTodoItem) => {
+  //   setTodos([...todos, newTodoItem]);
+  //   toggleForm();
+  // };
+
   return (
     <>
       <div className='add-new' onClick={toggleForm}>
@@ -33,7 +39,6 @@ function AddNew() {
           />
         </svg>
       </div>
-      {showForm && <NewTodoForm toggleForm={toggleForm} />}
     </>
   );
 }
