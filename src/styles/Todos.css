@@ -3,7 +3,7 @@
   height: 84px;
   width: 343px;
   border-radius: 10px;
-  margin: 0 auto;
+  margin: 0 17px 16px 17px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,6 +34,10 @@
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
+  max-width: 200px;
+  max-height: 30px;
+  overflow-x: auto;
+  /*I added scroll here too just in case its greater than the max-height*/
 }
 .todos__content {
   display: flex;

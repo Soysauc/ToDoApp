@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/SearchBar.css';
 
-function SearchBar() {
+function SearchBar({ handleSearch }) {
+  const [searchInput, setSearchInput] = useState('');
+
+  const handleInputChange = (event) => {
+    setSearchInput(event.target.value);
+    handleSearch(event.target.value); // Call the handleSearch function from the parent component (Todos) with the search input value
+  };
   return (
     <div className='searchbar'>
-      <input type='text' placeholder='Search Todo&#39;s'></input>
+      <input
+        type='text'
+        placeholder='Search Todo&#39;s'
+        value={searchInput}
+        onChange={handleInputChange}
+      ></input>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='20'

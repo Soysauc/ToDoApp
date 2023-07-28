@@ -20,8 +20,6 @@ function App() {
       </header>
       <div>
         <section className='app__scroller'>
-          <SearchBar />
-          <div className='app__divider'></div>
           <Todos />
         </section>
         <AddNew />

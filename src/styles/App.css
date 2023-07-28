@@ -2,7 +2,7 @@
   color: white;
   width: 375px;
   margin: 0 auto;
-  height: 812px;
+  max-height: 812px;
 }
 .app__title {
   font-family: Poppins;
@@ -47,4 +47,5 @@
 }
 .app__scroller {
   overflow-y: auto;
+  max-height: 572px;
 }
