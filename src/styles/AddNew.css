@@ -1,0 +1,7 @@
+.add-new {
+  z-index: 99;
+  position: absolute;
+  right: 15px;
+  top: 715px;
+  cursor: pointer;
+}
