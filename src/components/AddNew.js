@@ -1,18 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/AddNew.css';
 
 function AddNew({ toggleForm }) {
-  // const [showForm, setShowForm] = useState(false);
-  // const toggleForm = () => {
-  //   setShowForm(!showForm);
-  // };
-  // const [todos, setTodos] = useState([]);
-
-  // const addTodo = (newTodoItem) => {
-  //   setTodos([...todos, newTodoItem]);
-  //   toggleForm();
-  // };
-
   return (
     <>
       <div className='add-new' onClick={toggleForm}>
