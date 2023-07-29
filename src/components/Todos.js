@@ -24,30 +24,37 @@ function Todos({ type }) {
   useEffect(() => {
     fetchTodos()
       .then((data) => {
-        const filteredData = data.filter((todo) =>
-          type === 'open' ? !todo.completed : todo.completed
-        );
         setTodos(data);
-        setFilteredTodos(filteredData);
         localStorage.setItem('todos', JSON.stringify(data));
       })
       .catch((error) => console.error('Error fetching todos:', error));
-  }, [type]);
-
+  }, []);
+  useEffect(() => {
+    setFilteredTodos(
+      todos.filter((todo) =>
+        type === 'open' ? !todo.completed : todo.completed
+      )
+    );
+  }, [todos, type]);
   const markAsCompleted = (id) => {
-    const newTodos = todos.map((todo) => {
+    const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
-        return { ...todo, completed: true };
+        const updatedTodo = { ...todo, completed: true };
+        addTodo(updatedTodo, true);
+        return updatedTodo;
       }
       return todo;
     });
 
-    setTodos(newTodos);
+    setTodos(updatedTodos);
     setFilteredTodos(
-      newTodos.filter((todo) => todo.completed === (type === 'completed'))
+      updatedTodos.filter((todo) => todo.completed === (type === 'completed'))
     );
-    localStorage.setItem('todos', JSON.stringify(newTodos));
-    setQuoteId(null);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+
+    if (quoteId === id) {
+      setQuoteId(null);
+    }
   };
 
   const handleSearch = (searchInput) => {
@@ -61,11 +68,37 @@ function Todos({ type }) {
   };
 
   const addTodo = (newTodo, isUpdating) => {
+    let updatedTodos;
+    let updatedFilteredTodos;
+
     if (isUpdating) {
-      setTodos(todos.map((todo) => (todo.id === newTodo.id ? newTodo : todo)));
+      updatedTodos = todos.map((todo) =>
+        todo.id === newTodo.id ? newTodo : todo
+      );
+
+      if (newTodo.completed) {
+        updatedFilteredTodos = [
+          newTodo,
+          ...updatedTodos.filter(
+            (todo) => todo.id !== newTodo.id && todo.completed
+          ),
+        ];
+      } else {
+        updatedFilteredTodos = updatedTodos.filter((todo) =>
+          type === 'open' ? !todo.completed : todo.completed
+        );
+      }
     } else {
-      setTodos([...todos, newTodo]);
+      updatedTodos = [newTodo, ...todos];
+      updatedFilteredTodos = updatedTodos.filter((todo) =>
+        type === 'open' ? !todo.completed : todo.completed
+      );
     }
+
+    setTodos(updatedTodos);
+    setFilteredTodos(updatedFilteredTodos);
+
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
 
   return (
