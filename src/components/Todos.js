@@ -11,14 +11,42 @@ function Todos({ type }) {
   const [quoteId, setQuoteId] = useState(null);
 
   useEffect(() => {
-    fetchTodos().then((data) => {
+    let data = localStorage.getItem('todos');
+    if (!data) {
+      fetchTodos().then((data) => {
+        const filteredData = data.filter((todo) =>
+          type === 'open' ? !todo.completed : todo.completed
+        );
+        setTodos(data);
+        setFilteredTodos(filteredData);
+
+        localStorage.setItem('todos', JSON.stringify(data));
+      });
+    } else {
+      data = JSON.parse(data);
       const filteredData = data.filter((todo) =>
         type === 'open' ? !todo.completed : todo.completed
       );
-      setTodos(filteredData);
+      setTodos(data);
       setFilteredTodos(filteredData);
-    });
+    }
   }, [type]);
+
+  const markAsCompleted = (id) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: true };
+      }
+      return todo;
+    });
+
+    setTodos(newTodos);
+    setFilteredTodos(
+      newTodos.filter((todo) => todo.completed === (type === 'completed'))
+    );
+    localStorage.setItem('todos', JSON.stringify(newTodos));
+    setQuoteId(null);
+  };
 
   const handleSearch = (searchInput) => {
     const filtered = todos.filter((todo) =>
@@ -29,6 +57,7 @@ function Todos({ type }) {
   const toggleQuote = (id) => {
     setQuoteId(id === quoteId ? null : id);
   };
+
   return (
     <div>
       <SearchBar handleSearch={handleSearch} />
@@ -90,7 +119,9 @@ function Todos({ type }) {
             </div>
           </div>
           <div style={{ marginRight: '35.5px' }}>
-            <Elipse id={todo.id} toggleQuote={toggleQuote} />{' '}
+            {type === 'open' && (
+              <Elipse id={todo.id} toggleQuote={toggleQuote} />
+            )}
             {/* pass id and toggleQuote function as props */}
           </div>
           {quoteId === todo.id && (
@@ -98,7 +129,9 @@ function Todos({ type }) {
               <span>Edit ToDo</span>
               <div className='quote__divider'></div>
 
-              <span>Mark Completed</span>
+              <span onClick={() => markAsCompleted(todo.id)}>
+                Mark Completed
+              </span>
             </div>
           )}
         </div>
