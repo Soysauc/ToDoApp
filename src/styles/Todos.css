@@ -65,3 +65,14 @@
 .todos:hover .todo__item-id {
   background: #292639;
 }
+.todos__check {
+  margin: 20px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-color: #6bdd8a;
+  border-radius: 50%;
+}

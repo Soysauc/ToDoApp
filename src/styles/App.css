@@ -42,10 +42,10 @@
 
 .selected {
   position: relative;
-  opacity: 0.7; /* set opacity for inactive state */
+  opacity: 0.7;
   text-align: center;
   width: 94px;
-  transition: opacity 0.3s ease-in-out; /* transition the opacity */
+  transition: opacity 0.3s ease-in-out;
 }
 
 .selected::after {
@@ -61,7 +61,7 @@
 }
 
 .selected.active {
-  opacity: 1; /* set opacity for active state */
+  opacity: 1;
 }
 
 .selected.active::after {
