@@ -5,17 +5,30 @@ import '../styles/App.css';
 import Elipse from './Elipse';
 import SearchBar from './SearchBar';
 
-function Todos() {
+function Todos({ type }) {
   const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [quoteId, setQuoteId] = useState(null);
+  const [filteredOpenTodos, setFilteredOpenTodos] = useState([]);
+  const [filteredClosedTodos, setFilteredClosedTodos] = useState([]);
 
+  // useEffect(() => {
+  //   fetchTodos().then((data) => {
+  //     setTodos(data);
+  //     setFilteredTodos(data);
+  //     setFilteredOpenTodos(data.filter((todo) => !todo.completed));
+  //     setFilteredClosedTodos(data.filter((todo) => todo.completed));
+  //   });
+  // }, []);
   useEffect(() => {
     fetchTodos().then((data) => {
-      setTodos(data);
-      setFilteredTodos(data);
+      setTodos(
+        data.filter((todo) =>
+          type === 'open' ? !todo.completed : todo.completed
+        )
+      );
     });
-  }, []);
+  }, [type]);
 
   const handleSearch = (searchInput) => {
     const filtered = todos.filter((todo) =>
@@ -31,8 +44,8 @@ function Todos() {
       <SearchBar handleSearch={handleSearch} />
       <div className='app__divider'></div>
 
-      {filteredTodos.map((todo) => (
-        <div className='todos' key={todo.id}>
+      {todos.map((todo) => (
+        <div className={`todos todos--${type}`} key={todo.id}>
           <div style={{ display: 'flex' }}>
             <svg
               className='todos__circle'
