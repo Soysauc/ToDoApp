@@ -9,24 +9,14 @@ function Todos({ type }) {
   const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [quoteId, setQuoteId] = useState(null);
-  const [filteredOpenTodos, setFilteredOpenTodos] = useState([]);
-  const [filteredClosedTodos, setFilteredClosedTodos] = useState([]);
 
-  // useEffect(() => {
-  //   fetchTodos().then((data) => {
-  //     setTodos(data);
-  //     setFilteredTodos(data);
-  //     setFilteredOpenTodos(data.filter((todo) => !todo.completed));
-  //     setFilteredClosedTodos(data.filter((todo) => todo.completed));
-  //   });
-  // }, []);
   useEffect(() => {
     fetchTodos().then((data) => {
-      setTodos(
-        data.filter((todo) =>
-          type === 'open' ? !todo.completed : todo.completed
-        )
+      const filteredData = data.filter((todo) =>
+        type === 'open' ? !todo.completed : todo.completed
       );
+      setTodos(filteredData);
+      setFilteredTodos(filteredData);
     });
   }, [type]);
 
@@ -44,7 +34,7 @@ function Todos({ type }) {
       <SearchBar handleSearch={handleSearch} />
       <div className='app__divider'></div>
 
-      {todos.map((todo) => (
+      {filteredTodos.map((todo) => (
         <div className={`todos todos--${type}`} key={todo.id}>
           <div style={{ display: 'flex' }}>
             <svg
@@ -60,7 +50,7 @@ function Todos({ type }) {
             <div className='todos__content'>
               <span className='todo__item-text'>{todo.title}</span>
               <div className='todo__item-id'>User:{todo.userId}</div>
-              {/* All of the User Ids of the Array were giving me 1*/}
+              {/* All of the User Ids of the Array were giving me 1 or two from the dataset*/}
             </div>
           </div>
           <div style={{ marginRight: '35.5px' }}>

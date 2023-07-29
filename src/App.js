@@ -44,9 +44,20 @@ function App() {
           </div>
         )}
         <div className='app__header-toggle'>
-          <span onClick={() => setView('open')}>Open</span>
-          <span onClick={() => setView('closed')}>Closed</span>
+          <span
+            className={`selected ${view === 'open' ? 'active' : ''}`}
+            onClick={() => setView('open')}
+          >
+            Open
+          </span>
+          <span
+            className={`selected ${view === 'closed' ? 'active' : ''}`}
+            onClick={() => setView('closed')}
+          >
+            Closed
+          </span>
         </div>
+
         <div className='app__gradient'></div>
       </header>
       <div className='app__content'>
