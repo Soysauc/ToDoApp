@@ -86,12 +86,12 @@
   background: rgba(7, 4, 23, 0.71);
   z-index: 100;
   position: absolute;
+  margin-right: 21px;
   right: 10px;
   top: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   align-items: first baseline;
 }
 .quote-bubble span {
@@ -120,4 +120,9 @@
   height: 1px;
   background: #231e3e;
   margin: 9px auto;
+}
+.quote-bubble__svg {
+  position: absolute;
+  top: -15px;
+  right: 10px;
 }

@@ -21,27 +21,17 @@ function Todos({ type }) {
     setEditingTodo(null);
     setShowForm(false);
   };
-
   useEffect(() => {
-    let data = localStorage.getItem('todos');
-    if (!data) {
-      fetchTodos().then((data) => {
+    fetchTodos()
+      .then((data) => {
         const filteredData = data.filter((todo) =>
           type === 'open' ? !todo.completed : todo.completed
         );
         setTodos(data);
         setFilteredTodos(filteredData);
-
         localStorage.setItem('todos', JSON.stringify(data));
-      });
-    } else {
-      data = JSON.parse(data);
-      const filteredData = data.filter((todo) =>
-        type === 'open' ? !todo.completed : todo.completed
-      );
-      setTodos(data);
-      setFilteredTodos(filteredData);
-    }
+      })
+      .catch((error) => console.error('Error fetching todos:', error));
   }, [type]);
 
   const markAsCompleted = (id) => {
@@ -145,6 +135,21 @@ function Todos({ type }) {
               </div>
               {quoteId === todo.id && (
                 <div className='quote-bubble'>
+                  <div className='quote-bubble__svg'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='8'
+                      height='6'
+                      viewBox='0 0 8 6'
+                      fill='none'
+                    >
+                      <path
+                        d='M4 0L7.4641 6H0.535898L4 0Z'
+                        fill='#070417'
+                        fillOpacity='0.71'
+                      />
+                    </svg>
+                  </div>
                   <span onClick={() => startEditing(todo)}>Edit ToDo</span>
                   <div className='quote__divider'></div>
                   <span onClick={() => markAsCompleted(todo.id)}>
