@@ -5,31 +5,41 @@ import Todos from './components/Todos';
 import AddNew from './components/AddNew';
 import NewTodoForm from './components/NewTodoForm';
 import { fetchTodos } from './Api/fetchTodos';
+import { TodosProvider, TodosContext } from './TodosContext';
 
 function App() {
   const [todos, setTodos] = useState([]);
-
-  const [filteredOpenTodos, setFilteredOpenTodos] = useState([]);
-  const [filteredClosedTodos, setFilteredClosedTodos] = useState([]);
-
   const [showForm, setShowForm] = useState(false);
   const [showQuote, setShowQuote] = useState(false);
   const [view, setView] = useState('open');
 
   useEffect(() => {
-    fetchTodos().then((data) => {
-      setFilteredOpenTodos(data.filter((todo) => !todo.completed));
-      setFilteredClosedTodos(data.filter((todo) => todo.completed));
-    });
+    const storedTodos = localStorage.getItem('todos');
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    } else {
+      fetchTodos().then((data) => {
+        setTodos(data);
+        localStorage.setItem('todos', JSON.stringify(data));
+      });
+    }
   }, []);
 
   const addTodo = (newTodoItem) => {
-    setTodos([...todos, newTodoItem]);
+    setTodos((prevTodos) => {
+      const updatedTodos = [newTodoItem, ...prevTodos];
+      localStorage.setItem('todos', JSON.stringify(updatedTodos));
+      console.log(updatedTodos); // Add this line
+      return updatedTodos;
+    });
   };
 
   const toggleQuote = () => {
     setShowQuote(!showQuote);
   };
+
+  const openTodos = todos.filter((todo) => !todo.completed);
+  const closedTodos = todos.filter((todo) => todo.completed);
 
   return (
     <div className='app'>
@@ -63,9 +73,9 @@ function App() {
       <div className='app__content'>
         <section className='app__scroller'>
           {view === 'open' ? (
-            <Todos todos={filteredOpenTodos} type='open' />
+            <Todos todos={openTodos} type='open' />
           ) : (
-            <Todos todos={filteredClosedTodos} type='closed' />
+            <Todos todos={closedTodos} type='closed' />
           )}
         </section>
         <AddNew toggleForm={() => setShowForm(true)} />

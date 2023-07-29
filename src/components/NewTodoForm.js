@@ -13,12 +13,15 @@ function NewTodoForm({ toggleForm, addTodo }) {
     }
 
     const newTodoItem = {
+      id: Date.now(),
       title: newTodo,
-      user: selectedUser,
-      status: selectedStatus,
+      userId: selectedUser.replace('User', ''),
+      completed: selectedStatus === 'Completed' ? true : false,
     };
 
     addTodo(newTodoItem);
+    console.log(newTodoItem); // Add this line
+
     setNewTodo('');
     setSelectedUser('');
     setSelectedStatus('');
