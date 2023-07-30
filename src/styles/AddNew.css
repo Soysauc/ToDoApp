@@ -5,3 +5,6 @@
   top: 715px;
   cursor: pointer;
 }
+.disappear {
+  display: none;
+}

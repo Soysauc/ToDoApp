@@ -1,10 +1,17 @@
 import React from 'react';
 import '../styles/AddNew.css';
 
-function AddNew({ toggleForm }) {
+function AddNew({ showForm, toggleForm }) {
+  const handleClick = () => {
+    toggleForm();
+  };
+
   return (
     <>
-      <div className='add-new' onClick={toggleForm}>
+      <div
+        className={`add-new ${showForm ? 'disappear' : ''}`}
+        onClick={handleClick}
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='111'

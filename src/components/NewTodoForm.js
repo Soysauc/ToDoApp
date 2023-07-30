@@ -13,9 +13,9 @@ function NewTodoForm({ toggleForm, addTodo }) {
     }
 
     const newTodoItem = {
-      id: Date.now(),
+      userId: parseInt(selectedUser.replace('User', '')),
+      id: 0,
       title: newTodo,
-      userId: selectedUser.replace('User', ''),
       completed: selectedStatus === 'Completed' ? true : false,
     };
 

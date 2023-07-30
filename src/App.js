@@ -5,7 +5,6 @@ import Todos from './components/Todos';
 import AddNew from './components/AddNew';
 import NewTodoForm from './components/NewTodoForm';
 import { fetchTodos } from './Api/fetchTodos';
-import { TodosProvider, TodosContext } from './TodosContext';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -14,28 +13,30 @@ function App() {
   const [view, setView] = useState('open');
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem('todos');
-    if (storedTodos) {
-      setTodos(JSON.parse(storedTodos));
-    } else {
-      fetchTodos().then((data) => {
+    fetchTodos()
+      .then((data) => {
         setTodos(data);
         localStorage.setItem('todos', JSON.stringify(data));
-      });
-    }
+      })
+      .catch((error) => console.error('Error fetching todos:', error));
   }, []);
 
   const addTodo = (newTodoItem) => {
-    setTodos((prevTodos) => {
-      const updatedTodos = [newTodoItem, ...prevTodos];
-      localStorage.setItem('todos', JSON.stringify(updatedTodos));
-      console.log(updatedTodos); // Add this line
-      return updatedTodos;
-    });
+    setTodos((prevTodos) => [newTodoItem, ...prevTodos]);
+    localStorage.setItem('todos', JSON.stringify([newTodoItem, ...todos]));
   };
-
+  const markAsCompleted = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: true } : todo
+      )
+    );
+  };
   const toggleQuote = () => {
     setShowQuote(!showQuote);
+  };
+  const toggleForm = () => {
+    setShowForm(!showForm);
   };
 
   const openTodos = todos.filter((todo) => !todo.completed);
@@ -73,16 +74,23 @@ function App() {
       <div className='app__content'>
         <section className='app__scroller'>
           {view === 'open' ? (
-            <Todos todos={openTodos} type='open' />
+            <Todos
+              todos={openTodos}
+              type='open'
+              addTodo={addTodo}
+              markAsCompleted={markAsCompleted}
+            />
           ) : (
-            <Todos todos={closedTodos} type='closed' />
+            <Todos
+              todos={closedTodos}
+              type='closed'
+              markAsCompleted={markAsCompleted}
+            />
           )}
         </section>
-        <AddNew toggleForm={() => setShowForm(true)} />
+        <AddNew showForm={showForm} toggleForm={toggleForm} />
       </div>
-      {showForm && (
-        <NewTodoForm toggleForm={() => setShowForm(false)} addTodo={addTodo} />
-      )}
+      {showForm && <NewTodoForm toggleForm={toggleForm} addTodo={addTodo} />}
     </div>
   );
 }
