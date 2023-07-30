@@ -33,6 +33,17 @@ function App() {
       )
     );
   };
+  const markAsOpen = (id) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: false };
+        } else {
+          return todo;
+        }
+      });
+    });
+  };
   const toggleQuote = () => {
     setShowQuote(!showQuote);
   };
@@ -83,6 +94,7 @@ function App() {
               type='open'
               addTodo={addTodo}
               markAsCompleted={markAsCompleted}
+              markAsOpen={markAsOpen}
               toggleEditForm={toggleEditForm}
             />
           ) : (
@@ -90,6 +102,7 @@ function App() {
               todos={closedTodos}
               type='closed'
               markAsCompleted={markAsCompleted}
+              markAsOpen={markAsOpen}
               toggleEditForm={toggleEditForm}
             />
           )}
