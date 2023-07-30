@@ -34,8 +34,11 @@ function Todos({ todos, type, addTodo, markAsCompleted, toggleEditForm }) {
     );
     setFilteredTodos(filtered);
   };
-  const toggleQuote = (id) => {
-    setQuoteId(id === quoteId ? null : id);
+  // const toggleQuote = (id) => {
+  //   setQuoteId(id === quoteId ? null : id);
+  // };
+  const setQuote = (id, state) => {
+    setQuoteId(state ? id : null);
   };
 
   return (
@@ -98,35 +101,38 @@ function Todos({ todos, type, addTodo, markAsCompleted, toggleEditForm }) {
                   <div className='todo__item-id'>User:{todo.userId}</div>
                 </div>
               </div>
-              <div style={{ marginRight: '35.5px' }}>
-                {type === 'open' && (
-                  <Elipse id={todo.id} toggleQuote={toggleQuote} />
+              <div
+                style={{ marginRight: '35px' }}
+                onMouseEnter={() => setQuote(todo.id, true)}
+                onMouseLeave={() => setQuote(todo.id, false)}
+              >
+                {' '}
+                {type === 'open' && <Elipse id={todo.id} />}
+                {quoteId === todo.id && (
+                  <div className='quote-bubble'>
+                    <div className='quote-bubble__svg'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='8'
+                        height='6'
+                        viewBox='0 0 8 6'
+                        fill='none'
+                      >
+                        <path
+                          d='M4 0L7.4641 6H0.535898L4 0Z'
+                          fill='#070417'
+                          fillOpacity='0.71'
+                        />
+                      </svg>
+                    </div>
+                    <span onClick={() => startEditing(todo)}>Edit ToDo</span>
+                    <div className='quote__divider'></div>
+                    <span onClick={() => markAsCompleted(todo.id)}>
+                      Mark Completed
+                    </span>
+                  </div>
                 )}
               </div>
-              {quoteId === todo.id && (
-                <div className='quote-bubble'>
-                  <div className='quote-bubble__svg'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='8'
-                      height='6'
-                      viewBox='0 0 8 6'
-                      fill='none'
-                    >
-                      <path
-                        d='M4 0L7.4641 6H0.535898L4 0Z'
-                        fill='#070417'
-                        fillOpacity='0.71'
-                      />
-                    </svg>
-                  </div>
-                  <span onClick={() => startEditing(todo)}>Edit ToDo</span>
-                  <div className='quote__divider'></div>
-                  <span onClick={() => markAsCompleted(todo.id)}>
-                    Mark Completed
-                  </span>
-                </div>
-              )}
             </div>
           ))}
         </>

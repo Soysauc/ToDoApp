@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Elipse({ id, toggleQuote }) {
+function Elipse() {
   return (
     <svg
       style={{ cursor: 'pointer' }}
@@ -9,7 +9,7 @@ function Elipse({ id, toggleQuote }) {
       height='21'
       viewBox='0 0 21 6'
       fill='none'
-      onClick={() => toggleQuote(id)}
+      // onClick={() => toggleQuote(id)}
     >
       <path
         d='M2.5 5.5C1.11929 5.5 0 4.38071 0 3C0 1.61929 1.11929 0.5 2.5 0.5C3.88071 0.5 5 1.61929 5 3C5 4.38071 3.88071 5.5 2.5 5.5Z'
