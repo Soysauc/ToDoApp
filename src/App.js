@@ -11,6 +11,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [showQuote, setShowQuote] = useState(false);
   const [view, setView] = useState('open');
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     fetchTodos()
@@ -37,6 +38,9 @@ function App() {
   };
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+  const toggleEditForm = () => {
+    setShowEditForm(!showEditForm);
   };
 
   const openTodos = todos.filter((todo) => !todo.completed);
@@ -79,16 +83,18 @@ function App() {
               type='open'
               addTodo={addTodo}
               markAsCompleted={markAsCompleted}
+              toggleEditForm={toggleEditForm}
             />
           ) : (
             <Todos
               todos={closedTodos}
               type='closed'
               markAsCompleted={markAsCompleted}
+              toggleEditForm={toggleEditForm}
             />
           )}
         </section>
-        <AddNew showForm={showForm} toggleForm={toggleForm} />
+        <AddNew showForm={showForm || showEditForm} toggleForm={toggleForm} />
       </div>
       {showForm && <NewTodoForm toggleForm={toggleForm} addTodo={addTodo} />}
     </div>

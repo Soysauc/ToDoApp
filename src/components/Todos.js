@@ -5,7 +5,7 @@ import Elipse from './Elipse';
 import SearchBar from './SearchBar';
 import EditItem from './EditItem';
 
-function Todos({ todos, type, addTodo, markAsCompleted }) {
+function Todos({ todos, type, addTodo, markAsCompleted, toggleEditForm }) {
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [quoteId, setQuoteId] = useState(null);
   const [editingTodo, setEditingTodo] = useState(null);
@@ -13,11 +13,11 @@ function Todos({ todos, type, addTodo, markAsCompleted }) {
 
   const startEditing = (todo) => {
     setEditingTodo(todo);
-    setShowForm(true);
+    toggleEditForm();
   };
   const stopEditing = () => {
     setEditingTodo(null);
-    setShowForm(false);
+    toggleEditForm();
   };
 
   useEffect(() => {
